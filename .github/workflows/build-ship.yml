@@ -15,7 +15,7 @@ jobs:
       - run: docker tag ghcr.io/duderamos/perfect-docker:base-build perfect-docker:base-build || true
       - run: docker build . -t perfect-docker:base -f docker/Dockerfile.base
       - run: docker build . -t perfect-docker:base-build -f docker/Dockerfile.build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from perfect-docker:base-build
-      - run: docker build . -t perfect-docker:latest -f docker/Dockerfile.web --cache-from perfect-docker:base-build
+      - run: docker build . -t perfect-docker:latest -f docker/Dockerfile.app --cache-from perfect-docker:base-build
       - run: docker build . -t perfect-docker:console -f docker/Dockerfile.console --cache-from perfect-docker:base-build
       - run: docker tag perfect-docker:base ghcr.io/duderamos/perfect-docker:base
       - run: docker tag perfect-docker:base-build ghcr.io/duderamos/perfect-docker:base-build
