@@ -1,0 +1,8 @@
+FROM ruby:3.0.0-alpine
+
+ARG PACKAGES="tzdata postgresql-client"
+
+RUN apk update \
+    && apk upgrade \
+    && apk add --update --no-cache \
+    $PACKAGES \
