@@ -1,0 +1,27 @@
+FROM perfect-docker:base-build AS base-build
+FROM perfect-docker:base
+
+ARG RAILS_ROOT=/app
+ARG PACKAGES="bash openssh"
+ARG SSH_KEYS=""
+
+WORKDIR $RAILS_ROOT
+
+RUN apk update \
+    && apk add --update --no-cache $PACKAGES
+
+COPY --from=base-build $RAILS_ROOT $RAILS_ROOT
+
+RUN echo "root:$(cat /dev/urandom | strings | grep -m 1 -oEi '[a-zA-Z0-9_^!#]{10}')" | chpasswd && \
+      mkdir -p /root/.ssh && \
+      echo $SSH_KEYS | base64 -d > /root/.ssh/authorized_keys && \
+      chmod 400 /root/.ssh/authorized_keys && \
+      sed -i \
+        -e 's/#PermitRootLogin.*/PermitRootLogin\ without-password/' \
+        -e 's/#PubkeyAuthentication.*/PubkeyAuthentication\ yes/' \
+        /etc/ssh/sshd_config
+
+RUN chmod +x ./entrypoint-console.sh
+
+ENTRYPOINT ["./entrypoint-console.sh"]
+

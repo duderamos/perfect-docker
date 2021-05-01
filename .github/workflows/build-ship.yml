@@ -9,11 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-      - run: docker pull ghcr.io/duderamos/perfect-docker:base
+      - run: docker pull ghcr.io/duderamos/perfect-docker:base || true
       - run: docker pull ghcr.io/duderamos/perfect-docker:base-build || true
-      - run: docker tag ghcr.io/duderamos/perfect-docker:base perfect-docker:base
+      - run: docker tag ghcr.io/duderamos/perfect-docker:base perfect-docker:base || true
       - run: docker tag ghcr.io/duderamos/perfect-docker:base-build perfect-docker:base-build || true
+      - run: docker build . -t perfect-docker:base -f docker/Dockerfile.base
       - run: docker build . -t perfect-docker:base-build -f docker/Dockerfile.build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from perfect-docker:base-build
       - run: docker build . -t perfect-docker:latest -f docker/Dockerfile.web --cache-from perfect-docker:base-build
+      - run: docker build . -t perfect-docker:console -f docker/Dockerfile.console --cache-from perfect-docker:base-build
+      - run: docker tag perfect-docker:base ghcr.io/duderamos/perfect-docker:base
       - run: docker tag perfect-docker:base-build ghcr.io/duderamos/perfect-docker:base-build
       - run: docker push ghcr.io/duderamos/perfect-docker:base-build
