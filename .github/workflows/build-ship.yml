@@ -19,4 +19,5 @@ jobs:
       - run: docker build . -t perfect-docker:console -f docker/Dockerfile.console --cache-from perfect-docker:base-build
       - run: docker tag perfect-docker:base ghcr.io/duderamos/perfect-docker:base
       - run: docker tag perfect-docker:base-build ghcr.io/duderamos/perfect-docker:base-build
+      - run: docker push ghcr.io/duderamos/perfect-docker:base
       - run: docker push ghcr.io/duderamos/perfect-docker:base-build
