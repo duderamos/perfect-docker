@@ -3,26 +3,52 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
-# Use Puma as the app server
-gem 'puma', '~> 5.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'activeadmin'
+gem 'active_material', github: 'vigetlabs/active_material'
+gem 'auth0'
+gem 'aws-sdk-s3'
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bugsnag'
+gem 'cancancan'
+gem 'devise'
+gem 'jwt'
+gem 'mini_magick'
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma'
+gem 'rack-cors'
+gem 'rails', '6.1.3.1'
+gem 'rswag-api'
+gem 'rswag-ui'
+gem 'rubocop-rails', require: false
+gem 'sass-rails'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'brakeman', require: false
+  gem 'bullet'
+  gem 'bundle-audit', require: false
+  gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'letter_opener'
+  gem 'pry', '0.13.1'
+  gem 'pry-rails'
+  gem 'rspec-rails'
+  gem 'rswag-specs'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :development do
-  gem 'listen', '~> 3.3'
+  gem 'ecs-rails-console'
+  gem 'listen'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+group :test do
+  gem 'database_cleaner'
+  gem 'rspec-json_expectations'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
+end
